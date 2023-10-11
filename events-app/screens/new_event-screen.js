@@ -2,6 +2,7 @@ import { useLayoutEffect, useState } from 'react';
 import { View, TextInput, StyleSheet, Button, Text } from 'react-native';
 import { HeaderBackButton } from '@react-navigation/elements';
 import { useNavigation } from '@react-navigation/native';
+import { API_URL } from '@env';
 
 const NewEventScreen = () => {
 	const [name, setName] = useState('');
@@ -36,7 +37,7 @@ const NewEventScreen = () => {
 		};
 
 		try {
-			const response = await fetch('http://192.168.50.107:8000/api/events/', {
+			const response = await fetch(API_URL + 'events/', {
 				method: 'POST',
 				headers: { 'Content-Type': 'application/json' },
 				body: JSON.stringify(data),

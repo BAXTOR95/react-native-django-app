@@ -2,6 +2,7 @@ import { View, StyleSheet, Button } from 'react-native';
 import EventList from '../components/events/event-list';
 import { useEffect, useState } from 'react';
 import { useNavigation } from '@react-navigation/native';
+import { API_URL } from '@env';
 
 const HomeScreen = () => {
 	const [data, setData] = useState([]);
@@ -19,7 +20,7 @@ const HomeScreen = () => {
 
 	const fetchData = async () => {
 		try {
-			const response = await fetch('http://192.168.50.107:8000/api/events/');
+			const response = await fetch(API_URL + 'events/');
 			const data = await response.json();
 			setData(data);
 		} catch (error) {
