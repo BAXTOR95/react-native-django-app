@@ -26,6 +26,10 @@ SECRET_KEY = config("SECRET_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = config("DEBUG", default=False, cast=bool)
 
+# IP and Default Ports
+DEVICE_IP = config("DEVICE_IP", default="127.0.0.1")
+PORT = config("PORT", default="8000")
+
 ALLOWED_HOSTS = [config("DEVICE_IP"), "localhost", "127.0.0.1"]
 
 
@@ -39,6 +43,7 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "rest_framework",
+    "core",
     "events",
     "corsheaders",
 ]
