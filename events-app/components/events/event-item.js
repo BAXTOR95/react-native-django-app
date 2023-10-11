@@ -1,5 +1,5 @@
 import { useNavigation } from '@react-navigation/native';
-import { StyleSheet, Text, TouchableOpacity, Image } from 'react-native';
+import { StyleSheet, Text, TouchableOpacity, View, Image } from 'react-native';
 
 const EventItem = ({ id, name, description, qrCode }) => {
 	const navigation = useNavigation();
@@ -10,8 +10,10 @@ const EventItem = ({ id, name, description, qrCode }) => {
 				navigation.navigate('Event', { eventId: id, name, description })
 			}
 		>
-			<Text>{name}</Text>
-			<Text>{description}</Text>
+			<View>
+				<Text>{name}</Text>
+				<Text>{description}</Text>
+			</View>
 			<Image style={{ width: 100, height: 100 }} source={{ uri: qrCode }} />
 		</TouchableOpacity>
 	);
@@ -19,6 +21,10 @@ const EventItem = ({ id, name, description, qrCode }) => {
 
 const styles = StyleSheet.create({
 	card: {
+		flexDirection: 'row',
+		backgroundColor: 'white',
+		alignItems: 'center',
+		justifyContent: 'space-around',
 		borderWidth: 1,
 		borderColor: '#c5c5c5',
 		borderRadius: 10,

@@ -4,10 +4,16 @@ import { useEffect, useState } from 'react';
 
 const HomeScreen = () => {
 	const [data, setData] = useState([]);
+	const [refresh, setRefresh] = useState(false);
+
+	const handleRefresh = () => {
+		console.log('refreshing');
+		setRefresh((prevState) => !prevState);
+	};
 
 	useEffect(() => {
 		fetchData();
-	}, []);
+	}, [refresh]);
 
 	const fetchData = async () => {
 		try {
@@ -21,7 +27,7 @@ const HomeScreen = () => {
 
 	return (
 		<View style={styles.screen}>
-			<EventList data={data} />
+			<EventList data={data} onRefresh={handleRefresh} />
 		</View>
 	);
 };
