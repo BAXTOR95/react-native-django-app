@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { Text, View, StyleSheet, Button } from 'react-native';
 import { BarCodeScanner } from 'expo-barcode-scanner';
+import { useNavigation, useIsFocused } from '@react-navigation/native';
 
 const QrCodeScreen = () => {
 	const [hasPermission, setHasPermission] = useState(null);
 	const [scanned, setScanned] = useState(false);
+	const navigation = useNavigation();
+	const isFocused = useIsFocused();
 
 	useEffect(() => {
 		const getBarCodeScannerPermissions = async () => {
@@ -13,15 +16,16 @@ const QrCodeScreen = () => {
 		};
 
 		getBarCodeScannerPermissions();
-	}, []);
+	}, [isFocused]);
 
 	const handleBarCodeScanned = ({ type, data }) => {
+		if (scanned) return; // Ignore if already scanned
+
 		setScanned(true);
 		alert(`Bar code with type ${type} and data ${data} has been scanned!`);
 
-		if (data) {
-			// TODO: use the navigation in order to navigate to the event detail page
-		}
+		// Navigate to the "New Event" screen with the scanned data
+		navigation.navigate('New Event', { qr_data: data });
 	};
 
 	if (hasPermission === null) {
@@ -33,10 +37,12 @@ const QrCodeScreen = () => {
 
 	return (
 		<View style={styles.screen}>
-			<BarCodeScanner
-				onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
-				style={StyleSheet.absoluteFillObject}
-			/>
+			{isFocused && (
+				<BarCodeScanner
+					onBarCodeScanned={handleBarCodeScanned}
+					style={StyleSheet.absoluteFillObject}
+				/>
+			)}
 			{scanned && (
 				<Button title={'Tap to Scan Again'} onPress={() => setScanned(false)} />
 			)}

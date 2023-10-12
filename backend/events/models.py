@@ -4,6 +4,12 @@ from io import BytesIO
 from django.core.files.base import ContentFile
 from PIL import Image
 
+import re
+
+
+def sanitize_filename(filename):
+    return re.sub(r"[^a-zA-Z0-9]", "_", filename)
+
 
 class Event(models.Model):
     name = models.CharField(max_length=200)
@@ -21,7 +27,8 @@ class Event(models.Model):
                 "RGB", (qrcode_img.pixel_size, qrcode_img.pixel_size), "white"
             )
             canvas.paste(qrcode_img)
-            fname = f"qr_code-{self.name}.png"
+            sanitized_name = sanitize_filename(self.name)
+            fname = f"qr_code-{sanitized_name}.png"
             buffer = BytesIO()
             canvas.save(buffer, "PNG")
             self.qr_code.save(

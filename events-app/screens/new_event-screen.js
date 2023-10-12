@@ -1,7 +1,7 @@
-import { useLayoutEffect, useState } from 'react';
+import { useEffect, useLayoutEffect, useState } from 'react';
 import { View, TextInput, StyleSheet, Button, Text } from 'react-native';
 import { HeaderBackButton } from '@react-navigation/elements';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useRoute } from '@react-navigation/native';
 import { API_URL } from '@env';
 
 const NewEventScreen = () => {
@@ -12,7 +12,9 @@ const NewEventScreen = () => {
 		isVisible: false,
 		msg: '',
 	});
-    const navigation = useNavigation();
+	const route = useRoute();
+	const navigation = useNavigation();
+	const { qr_data } = route.params;
 
 	useLayoutEffect(() => {
 		navigation.setOptions({
@@ -24,6 +26,12 @@ const NewEventScreen = () => {
 				/>
 			),
 		});
+	}, []);
+
+	useEffect(() => {
+		if (qr_data) {
+			setName(qr_data);
+		}
 	}, []);
 
 	const handleAddEvent = async () => {

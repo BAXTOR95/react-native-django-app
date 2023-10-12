@@ -15,7 +15,7 @@ export const MyDrawer = () => {
 			drawerContent={(props) => {
 				return (
 					<SafeAreaView
-						style={{ flex: 1, paddingTop: 20, backgroundColor: '#99f6e4' }}
+						style={{ flex: 1, paddingTop: 20, backgroundColor: '#f7f7f7' }}
 					>
 						<View
 							style={{
