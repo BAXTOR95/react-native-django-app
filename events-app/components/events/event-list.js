@@ -16,14 +16,11 @@ const EventList = ({ data, onRefresh }) => {
 	return (
 		<View>
 			<FlatList
-				data={data}
-				keyExtractor={(item) => item.id}
+				data={[...data].reverse()} // Reverse the data array
+				keyExtractor={(item) => item.id.toString()} // Ensure the key is a string
 				renderItem={renderItem}
 				refreshControl={
-					<RefreshControl
-						refreshing={false}
-						onRefresh={onRefresh}
-					/>
+					<RefreshControl refreshing={false} onRefresh={onRefresh} />
 				}
 			/>
 		</View>
